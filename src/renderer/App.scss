@@ -1,4 +1,10 @@
 @import '~antd/dist/antd.css';
+/**
+* CodeMirror assets imports
+*/
+@import '~codemirror/lib/codemirror.css';
+@import '~codemirror/theme/material.css';
+
 * {
   box-sizing: border-box;
 }
@@ -19,4 +25,9 @@ body,
   background: #fff;
   height: 53px;
   width: 53px;
+}
+
+.CodeMirror {
+  width: 100%;
+  height: 100%;
 }

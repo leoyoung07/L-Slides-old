@@ -1,45 +1,28 @@
+import CodeMirror from 'codemirror/lib/codemirror';
+import 'codemirror/mode/gfm/gfm';
+import 'codemirror/mode/markdown/markdown';
 import React from 'react';
+
 declare global {
   // tslint:disable-next-line:interface-name
-  interface Window {
-    // tslint:disable-next-line:no-any
-    module: any;
-    // tslint:disable-next-line:no-any
-    monaco: any;
-  }
+  interface Window {}
 }
+
 class Main extends React.Component {
   private editorRef = React.createRef<HTMLDivElement>();
 
   componentDidMount() {
-    (function() {
-      const path = require('path');
-      const amdLoader = require('../../node_modules/monaco-editor/min/vs/loader.js');
-      const amdRequire = amdLoader.require;
-      const amdDefine = amdLoader.require.define;
-      function uriFromPath(_path: string) {
-        var pathName = path.resolve(_path).replace(/\\/g, '/');
-        if (pathName.length > 0 && pathName.charAt(0) !== '/') {
-          pathName = '/' + pathName;
-        }
-        return encodeURI('file://' + pathName);
-      }
-      amdRequire.config({
-        baseUrl: uriFromPath(path.join(__dirname, '../node_modules/monaco-editor/min'))
+    if (this.editorRef.current) {
+      const editor = CodeMirror(this.editorRef.current, {
+        value: '# Hello, world!',
+        mode: {
+          name: 'gfm',
+          highlightFormatting: true
+        },
+        lineNumbers: true,
+        theme: 'material'
       });
-      // workaround monaco-css not understanding the environment
-      self.module = undefined;
-      amdRequire(['vs/editor/editor.main'], function() {
-        var editor = self.monaco.editor.create(document.getElementById('container'), {
-          value: [
-            'function x() {',
-            '\tconsole.log("Hello world!");',
-            '}'
-          ].join('\n'),
-          language: 'javascript'
-        });
-      });
-    })();
+    }
   }
 
   render() {
@@ -48,12 +31,10 @@ class Main extends React.Component {
         ref={this.editorRef}
         id="container"
         style={{
-          width: '500px',
-          height: '500px'
+          width: '100%',
+          height: '100%'
         }}
-      >
-        L-Slides
-      </div>
+      />
     );
   }
 }

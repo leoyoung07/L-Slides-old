@@ -608,6 +608,10 @@
   version "0.7.0"
   resolved "http://registry.npm.taobao.org/@sindresorhus/is/download/@sindresorhus/is-0.7.0.tgz#9a06f4f137ee84d7df0460c1fdb1135ffa6c50fd"
 
+"@types/codemirror@^0.0.69":
+  version "0.0.69"
+  resolved "http://registry.npm.taobao.org/@types/codemirror/download/@types/codemirror-0.0.69.tgz#a40ead562be9173dc18c0816c7f54c1fc272f937"
+
 "@types/electron-devtools-installer@^2.2.0":
   version "2.2.0"
   resolved "http://registry.npm.taobao.org/@types/electron-devtools-installer/download/@types/electron-devtools-installer-2.2.0.tgz#32ee4ebbe99b3daf9847a6d2097dc00b5de94f10"
@@ -2425,6 +2429,10 @@ coa@~2.0.1:
 code-point-at@^1.0.0:
   version "1.1.0"
   resolved "http://registry.npm.taobao.org/code-point-at/download/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
+
+codemirror@^5.42.0:
+  version "5.42.0"
+  resolved "http://registry.npm.taobao.org/codemirror/download/codemirror-5.42.0.tgz#2d5b640ed009e89dee9ed8a2a778e2a25b65f9eb"
 
 collection-visit@^1.0.0:
   version "1.0.0"
@@ -5874,10 +5882,6 @@ mkdirp@0.5.1, mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdi
 moment@*, moment@2.x, moment@^2.19.3, moment@^2.22.2:
   version "2.22.2"
   resolved "http://registry.npm.taobao.org/moment/download/moment-2.22.2.tgz#3c257f9839fc0e93ff53149632239eb90783ff66"
-
-monaco-editor@^0.15.6:
-  version "0.15.6"
-  resolved "http://registry.npm.taobao.org/monaco-editor/download/monaco-editor-0.15.6.tgz#d63b3b06f86f803464f003b252627c3eb4a09483"
 
 move-concurrently@^1.0.1:
   version "1.0.1"

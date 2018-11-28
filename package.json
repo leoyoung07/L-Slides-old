@@ -13,9 +13,9 @@
   "dependencies": {
     "@types/moment": "^2.13.0",
     "antd": "^3.8.4",
+    "codemirror": "^5.42.0",
     "electron-devtools-installer": "^2.2.4",
     "moment": "^2.22.2",
-    "monaco-editor": "^0.15.6",
     "react": "^16.4.1",
     "react-dnd": "^5.0.0",
     "react-dnd-html5-backend": "^5.0.1",
@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "@babel/preset-react": "^7.0.0-beta.51",
+    "@types/codemirror": "^0.0.69",
     "@types/electron-devtools-installer": "^2.2.0",
     "@types/react": "^16.4.1",
     "@types/react-dom": "^16.0.6",
