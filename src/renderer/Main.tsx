@@ -11,9 +11,11 @@ declare global {
 class Main extends React.Component {
   private editorRef = React.createRef<HTMLDivElement>();
 
+  private editor: CodeMirror.Editor | null = null;
+
   componentDidMount() {
     if (this.editorRef.current) {
-      const editor = CodeMirror(this.editorRef.current, {
+      this.editor = CodeMirror(this.editorRef.current, {
         value: '# Hello, world!',
         mode: {
           name: 'gfm',
@@ -21,6 +23,11 @@ class Main extends React.Component {
         },
         lineNumbers: true,
         theme: 'material'
+      });
+      this.editor.on('change', (editor, change) => {
+        const value = editor.getValue();
+        // tslint:disable-next-line:no-console
+        console.log(value, change);
       });
     }
   }
