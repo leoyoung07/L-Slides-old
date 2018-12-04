@@ -1,6 +1,7 @@
 import CodeMirror from 'codemirror/lib/codemirror';
 import 'codemirror/mode/gfm/gfm';
 import 'codemirror/mode/markdown/markdown';
+import _ from 'lodash';
 import React from 'react';
 import showdown from 'showdown';
 
@@ -9,7 +10,9 @@ declare global {
   interface Window {}
 }
 
-class Main extends React.Component {
+interface IMainProps {}
+
+class Main extends React.Component<IMainProps> {
   private editorRef = React.createRef<HTMLDivElement>();
   private previewRef = React.createRef<HTMLDivElement>();
 
@@ -17,14 +20,15 @@ class Main extends React.Component {
 
   private converter: showdown.Converter | null = null;
 
-  constructor() {
-    super({});
+  constructor(props: IMainProps) {
+    super(props);
     this.converter = new showdown.Converter();
   }
 
   componentDidMount() {
     const initValue = '# Hello, world!';
-    this.updatePreview(initValue);
+    const updatePreview = _.throttle(this.updatePreview, 300);
+    updatePreview(initValue);
     if (this.editorRef.current) {
       this.editor = CodeMirror(this.editorRef.current, {
         value: initValue,
@@ -37,7 +41,7 @@ class Main extends React.Component {
       });
       this.editor.on('change', (editor, change) => {
         const value = editor.getValue();
-        this.updatePreview(value);
+        updatePreview(value);
       });
     }
   }
@@ -72,7 +76,7 @@ class Main extends React.Component {
     );
   }
 
-  private updatePreview(value: string) {
+  private updatePreview = (value: string) => {
     if (this.previewRef.current && this.converter) {
       this.previewRef.current.innerHTML = this.converter.makeHtml(value);
     }
