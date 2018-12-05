@@ -12,7 +12,14 @@ declare global {
 
 interface IMainProps {}
 
-class Main extends React.Component<IMainProps> {
+interface IMainState {
+  slides: string[];
+  currentSlideIndex: number;
+}
+
+const DEFAULT_SLIDE_SEPARATOR = /^\r?\n---\r?\n$/gim;
+
+class Main extends React.Component<IMainProps, IMainState> {
   private editorRef = React.createRef<HTMLDivElement>();
   private previewRef = React.createRef<HTMLDivElement>();
 
@@ -22,13 +29,17 @@ class Main extends React.Component<IMainProps> {
 
   constructor(props: IMainProps) {
     super(props);
+    this.state = {
+      slides: [],
+      currentSlideIndex: 0
+    };
     this.converter = new showdown.Converter();
   }
 
   componentDidMount() {
     const initValue = '# Hello, world!';
-    const updatePreview = _.throttle(this.updatePreview, 300);
-    updatePreview(initValue);
+    const updateSlides = _.throttle(this.updateSlides, 300);
+    updateSlides(initValue);
     if (this.editorRef.current) {
       this.editor = CodeMirror(this.editorRef.current, {
         value: initValue,
@@ -41,7 +52,7 @@ class Main extends React.Component<IMainProps> {
       });
       this.editor.on('change', (editor, change) => {
         const value = editor.getValue();
-        updatePreview(value);
+        updateSlides(value);
       });
     }
   }
@@ -68,13 +79,24 @@ class Main extends React.Component<IMainProps> {
         <div
           style={{
             width: '50%',
-            height: '100%'
+            height: '100%',
+            position: 'relative'
           }}
         >
           <div
             style={{ width: '100%', height: '100%' }}
             ref={this.previewRef}
           />
+          <div
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              right: 0
+            }}
+          >
+            <button onClick={this.onPrev}>Prev</button>
+            <button onClick={this.onNext}>Next</button>
+          </div>
         </div>
       </div>
     );
@@ -84,6 +106,51 @@ class Main extends React.Component<IMainProps> {
     if (this.previewRef.current && this.converter) {
       this.previewRef.current.innerHTML = this.converter.makeHtml(value);
     }
+  };
+
+  private updateSlides = (value: string) => {
+    const slides = value.split(DEFAULT_SLIDE_SEPARATOR);
+    const currentSlideIndex = 0;
+    const previewValue =
+      slides.length > currentSlideIndex ? slides[currentSlideIndex] : '';
+    this.setState(
+      {
+        slides,
+        currentSlideIndex
+      },
+      () => {
+        this.updatePreview(previewValue);
+      }
+    );
+  };
+
+  private onPrev = () => {
+    const index = Math.max(this.state.currentSlideIndex - 1, 0);
+    const previewValue = this.state.slides[index];
+    this.setState(
+      {
+        currentSlideIndex: index
+      },
+      () => {
+        this.updatePreview(previewValue);
+      }
+    );
+  };
+
+  private onNext = () => {
+    const index = Math.min(
+      this.state.currentSlideIndex + 1,
+      this.state.slides.length - 1
+    );
+    const previewValue = this.state.slides[index];
+    this.setState(
+      {
+        currentSlideIndex: index
+      },
+      () => {
+        this.updatePreview(previewValue);
+      }
+    );
   };
 }
 
