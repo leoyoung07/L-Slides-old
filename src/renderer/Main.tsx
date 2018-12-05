@@ -58,20 +58,24 @@ class Main extends React.Component<IMainProps> {
         }}
       >
         <div
-          ref={this.editorRef}
-          id="container"
           style={{
             width: '50%',
             height: '100%'
           }}
-        />
+        >
+          <div style={{ width: '100%', height: '100%' }} ref={this.editorRef} />
+        </div>
         <div
-          ref={this.previewRef}
           style={{
             width: '50%',
             height: '100%'
           }}
-        />
+        >
+          <div
+            style={{ width: '100%', height: '100%' }}
+            ref={this.previewRef}
+          />
+        </div>
       </div>
     );
   }
@@ -80,7 +84,7 @@ class Main extends React.Component<IMainProps> {
     if (this.previewRef.current && this.converter) {
       this.previewRef.current.innerHTML = this.converter.makeHtml(value);
     }
-  }
+  };
 }
 
 export default Main;
