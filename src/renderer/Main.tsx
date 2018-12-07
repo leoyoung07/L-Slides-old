@@ -82,20 +82,28 @@ class Main extends React.Component<IMainProps, IMainState> {
             height: '100%',
             position: 'relative'
           }}
+          className="reveal"
         >
           <div
             style={{ width: '100%', height: '100%' }}
             ref={this.previewRef}
           />
           <div
-            style={{
-              position: 'absolute',
-              bottom: 0,
-              right: 0
-            }}
+            style={
+              {
+                // position: 'absolute',
+                // bottom: 0,
+                // right: 0
+              }
+            }
+            className="controls"
           >
-            <button onClick={this.onPrev}>Prev</button>
-            <button onClick={this.onNext}>Next</button>
+            <button onClick={this.onPrev} className="navigate-left enabled">
+              <div className="controls-arrow" />
+            </button>
+            <button onClick={this.onNext} className="navigate-right enabled">
+              <div className="controls-arrow" />
+            </button>
           </div>
         </div>
       </div>
